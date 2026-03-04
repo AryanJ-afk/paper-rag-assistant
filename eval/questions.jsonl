@@ -1,0 +1,25 @@
+{"source_file":"Pretraining in Lifelong Learning.pdf","question":"What is the main research question the paper asks about pre-training and catastrophic forgetting?","gold_pages":[1]}
+{"source_file":"Pretraining in Lifelong Learning.pdf","question":"List the main contributions of the paper.","gold_pages":[4]}
+{"source_file":"Pretraining in Lifelong Learning.pdf","question":"What is the key hypothesis for why pre-training reduces forgetting?","gold_pages":[3,4]}
+{"source_file":"Pretraining in Lifelong Learning.pdf","question":"What benchmark of 15 diverse NLP tasks is introduced and why?","gold_pages":[3,6,7]}
+{"source_file":"Pretraining in Lifelong Learning.pdf","question":"What is SAM and why do the authors use it in lifelong learning?","gold_pages":[3,19,21]}
+{"source_file":"Strengths and Limitations of Transformers.pdf","question":"What are the main contributions of this paper?","gold_pages":[2,4]}
+{"source_file":"Strengths and Limitations of Transformers.pdf","question":"What is the q-sparse averaging (qSA) task and what does it show about transformers?","gold_pages":[2,6,7]}
+{"source_file":"Strengths and Limitations of Transformers.pdf","question":"What is the key limitation shown by the triple detection / Match3 task?","gold_pages":[2,9]}
+{"source_file":"Strengths and Limitations of Transformers.pdf","question":"What role does embedding dimension play in transformer expressivity in their theory?","gold_pages":[2,6,7]}
+{"source_file":"Strengths and Limitations of Transformers.pdf","question":"How do they compare Match2 vs Match3 with self-attention layers?","gold_pages":[3,9]}
+{"source_file":"Diminishing Returns of Width for Continual Learning.pdf","question":"What is the main contribution of the paper regarding width and catastrophic forgetting?","gold_pages":[1,2]}
+{"source_file":"Diminishing Returns of Width for Continual Learning.pdf","question":"What does the paper mean by 'diminishing returns' of width for continual learning?","gold_pages":[1,2]}
+{"source_file":"Diminishing Returns of Width for Continual Learning.pdf","question":"What theoretical relationship do they claim between number of tasks, width, sparsity, and continual learning error?","gold_pages":[2,4]}
+{"source_file":"Diminishing Returns of Width for Continual Learning.pdf","question":"Which benchmarks/datasets are used in their wide FFN experiments?","gold_pages":[2,6,7]}
+{"source_file":"Diminishing Returns of Width for Continual Learning.pdf","question":"What do they report about depth and forgetting?","gold_pages":[2,8]}
+{"source_file":"Loss of Plasticity and Catastrophic Forgetting.pdf","question":"What problem does UPGD aim to solve in continual/streaming learning?","gold_pages":[1,2]}
+{"source_file":"Loss of Plasticity and Catastrophic Forgetting.pdf","question":"What is the key idea of Utility-based Perturbed Gradient Descent (UPGD)?","gold_pages":[1,3,4]}
+{"source_file":"Loss of Plasticity and Catastrophic Forgetting.pdf","question":"How do they define (or measure) plasticity in streaming learning?","gold_pages":[5,6]}
+{"source_file":"Loss of Plasticity and Catastrophic Forgetting.pdf","question":"What are the main findings comparing UPGD to Adam/SGD in their streaming setup?","gold_pages":[1,2,7,9]}
+{"source_file":"Loss of Plasticity and Catastrophic Forgetting.pdf","question":"What do they claim about catastrophic forgetting vs loss of plasticity and why methods need to address both?","gold_pages":[1,2,3]}
+{"source_file":"Continual Learning for Language Models.pdf","question":"What is Progressive Prompts and how does it work at a high level?","gold_pages":[1,2,3]}
+{"source_file":"Continual Learning for Language Models.pdf","question":"List the main contributions of Progressive Prompts.","gold_pages":[2]}
+{"source_file":"Continual Learning for Language Models.pdf","question":"How does Progressive Prompts avoid catastrophic forgetting while allowing forward transfer?","gold_pages":[1,2,3]}
+{"source_file":"Continual Learning for Language Models.pdf","question":"What is the training objective for task k in Progressive Prompts?","gold_pages":[3]}
+{"source_file":"Continual Learning for Language Models.pdf","question":"What is the prompt embedding reparameterization trick they propose and why?","gold_pages":[2,4]}

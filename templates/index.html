@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Paper RAG Assistant</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, Arial; margin: 24px; max-width: 980px; }
+    h1 { margin: 0 0 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 12px 0; }
+    label { display:block; margin: 8px 0 4px; font-weight: 600; }
+    input[type="text"], textarea, select { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc; }
+    textarea { min-height: 90px; }
+    button { padding: 10px 14px; border-radius: 10px; border: 0; background: #111; color: #fff; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    pre { background: #f6f6f6; padding: 12px; border-radius: 10px; overflow: auto; }
+    .muted { color:#666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Paper RAG Assistant</h1>
+  <div class="muted">Local RAG over PDFs (FAISS + sentence-transformers + Ollama)</div>
+
+  <div class="card">
+    <h2>1) Ingest PDF</h2>
+    <input id="pdfFile" type="file" accept="application/pdf" />
+    <div style="margin-top:10px;">
+      <button id="btnIngest" onclick="ingest()">Ingest</button>
+    </div>
+    <pre id="ingestOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>2) Ask a question</h2>
+    <label>Question</label>
+    <textarea id="question" placeholder="e.g., What is the main contribution of the paper?"></textarea>
+
+    <div class="row">
+      <div>
+        <label>Top K</label>
+        <input id="topk" type="text" value="5" />
+      </div>
+      <div>
+        <label>Optional: Source file (exact filename)</label>
+        <input id="sourceFile" type="text" placeholder="e.g., paper.pdf (leave blank for all)" />
+      </div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <button id="btnQuery" onclick="query()">Query</button>
+    </div>
+
+    <h3>Answer</h3>
+    <pre id="answerOut"></pre>
+
+    <h3>Citations</h3>
+    <pre id="citesOut"></pre>
+  </div>
+
+  <div class="card">
+    <h2>3) Summarize a paper</h2>
+    <label>Source file (exact filename)</label>
+    <input id="sumFile" type="text" placeholder="e.g., paper.pdf" />
+    <div style="margin-top:10px;">
+      <button id="btnSum" onclick="summarize()">Summarize</button>
+    </div>
+    <h3>Summary</h3>
+<pre id="sumText"></pre>
+
+<h3>Citations</h3>
+<pre id="sumCites"></pre>
+  </div>
+
+<script>
+  async function ingest() {
+    const file = document.getElementById("pdfFile").files[0];
+    const out = document.getElementById("ingestOut");
+    if (!file) { out.textContent = "Choose a PDF first."; return; }
+
+    document.getElementById("btnIngest").disabled = true;
+    out.textContent = "Uploading & indexing...";
+
+    const form = new FormData();
+    form.append("file", file);
+
+    const res = await fetch("/ingest", { method: "POST", body: form });
+    const json = await res.json();
+    out.textContent = JSON.stringify(json, null, 2);
+
+    document.getElementById("btnIngest").disabled = false;
+  }
+
+  async function query() {
+    const question = document.getElementById("question").value.trim();
+    const top_k = parseInt(document.getElementById("topk").value.trim() || "5", 10);
+    const source_file = document.getElementById("sourceFile").value.trim();
+
+    const answerOut = document.getElementById("answerOut");
+    const citesOut = document.getElementById("citesOut");
+    if (!question) { answerOut.textContent = "Enter a question first."; return; }
+
+    document.getElementById("btnQuery").disabled = true;
+    answerOut.textContent = "Thinking...";
+    citesOut.textContent = "";
+
+    const payload = { question, top_k };
+    if (source_file) payload.source_file = source_file;
+
+    const res = await fetch("/query", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    answerOut.textContent = json.answer || "";
+    citesOut.textContent = JSON.stringify(json.citations || [], null, 2);
+
+    document.getElementById("btnQuery").disabled = false;
+  }
+
+  async function summarize() {
+  const source_file = document.getElementById("sumFile").value.trim();
+  const outText = document.getElementById("sumText");
+  const outCites = document.getElementById("sumCites");
+
+  if (!source_file) {
+    outText.textContent = "Enter the PDF filename (e.g., paper.pdf).";
+    outCites.textContent = "";
+    return;
+  }
+
+  document.getElementById("btnSum").disabled = true;
+  outText.textContent = "Summarizing...";
+  outCites.textContent = "";
+
+  const res = await fetch("/summarize", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ source_file })
+  });
+
+  const json = await res.json();
+
+  outText.textContent = json.summary || "";
+  outCites.textContent = JSON.stringify(json.citations || [], null, 2);
+
+  document.getElementById("btnSum").disabled = false;
+}
+</script>
+</body>
+</html>

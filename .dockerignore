@@ -1,0 +1,10 @@
+ragvenv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.gitignore
+data/index
+eval
+ragvenv
